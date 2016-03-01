@@ -16,9 +16,14 @@ from models import CacheTable
 from config import data_api
 from tools import get_request_field, unicode_to_utf8, get_hash_id
 from Logger import logger
+from db import DjangoORMDB
 
 return_data = dict(code=0, msg="", data=None)
 DEFAULT_SCHEME = 'http'
+
+#########################################################
+db_server = DjangoORMDB(CacheTable)
+#########################################################
 
 def get(request):
     data = copy.copy(return_data)
@@ -45,8 +50,9 @@ def get(request):
     # 2, first check the mysql and return data if existed
     try:
         logger.info("[PARSE_ID]: {0}".format(id))
-        obj = CacheTable.objects.get(id=id)
-        obj_data = obj.data
+        # obj = CacheTable.objects.get(id=id)
+        # obj_data = obj.data
+        obj_data = db_server.get(id)
         data['data'] = json.loads(obj_data)
 
         data = json.dumps(data)
@@ -73,8 +79,9 @@ def get(request):
         try:
             result = json.dumps(result)
             logger.info("insert new item [id: {0}]".format(id))
-            created, obj = CacheTable.objects.update_or_create(id=id,
-                    defaults=dict(id=id, path=_path, info=id_json, data=result))
+            db_server.insert(id, data_dict=dict(id=id, path=_path, info=id_json, data=result))
+            # created, obj = CacheTable.objects.update_or_create(id=id,
+            #         defaults=dict(id=id, path=_path, info=id_json, data=result))
         except:
             msg = traceback.format_exc()
             logger.error(msg)
