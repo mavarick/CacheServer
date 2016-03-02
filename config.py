@@ -4,7 +4,7 @@
 ####################################
 ## specify the table name of caching
 ## TODO
-tablename = "cache_tbl"
+tablename = "cache_name_develoop"
 
 ####################################
 ## specify the web api for data

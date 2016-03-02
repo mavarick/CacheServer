@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'CacheServer.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db_spider_test',
+        'NAME': 'CacheDB',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
