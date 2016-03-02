@@ -1,13 +1,11 @@
 #encoding:utf8
 import copy
-import pdb
 import json
 import urllib
 import urllib2
 import requests
 import urlparse
 import traceback
-from collections import OrderedDict
 
 from django.shortcuts import render, HttpResponse
 
