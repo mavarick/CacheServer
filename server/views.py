@@ -11,16 +11,17 @@ from django.shortcuts import render, HttpResponse
 
 # Create your views here.
 from models import CacheTable
-from config import data_api
+from config import data_api, redis_config
 from tools import get_request_field, unicode_to_utf8, get_hash_id
 from Logger import logger
-from db import DjangoORMDB
+from db import DjangoORMDB, RedisDB
 
 return_data = dict(code=0, msg="", data=None)
 DEFAULT_SCHEME = 'http'
 
 #########################################################
-db_server = DjangoORMDB(CacheTable)
+# db_server = DjangoORMDB(CacheTable)
+db_server = RedisDB(redis_config)
 #########################################################
 
 def get(request):
@@ -58,7 +59,7 @@ def get(request):
         return HttpResponse(data,  content_type="application/json")
     except :
         msg = traceback.format_exc()
-        logger.error(msg)
+        logger.warn(msg)
 
     ################################################################################
     if not _scheme: _scheme = DEFAULT_SCHEME
@@ -69,6 +70,7 @@ def get(request):
     try:
         # resp = requests.post(new_url, data=request.POST), # TODO
         # '<html><title>405: Method Not Allowed</title><body>405: Method Not Allowed</body></html>'
+        # resp = urllib2.urlopen(new_url, data=urllib.urlencode(request.POST), timeout=1)
         resp = urllib2.urlopen(new_url, data=urllib.urlencode(request.POST), timeout=1)
         result = extract_data(resp.read())
         data['data'] = result
