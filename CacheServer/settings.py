@@ -77,15 +77,15 @@ WSGI_APPLICATION = 'CacheServer.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'CacheDB',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': 3306,
-        'OPTIONS':{
-            'init_command': 'SET storage_engine=MyISAM',
-        }
+        #'ENGINE': 'django.db.backends.mysql',
+        #'NAME': 'CacheDB',
+        #'USER': 'root',
+        #'PASSWORD': '',
+        #'HOST': 'localhost',
+        #'PORT': 3306,
+        #'OPTIONS':{
+        #    'init_command': 'SET storage_engine=MyISAM',
+        #}
     }
 }
 
